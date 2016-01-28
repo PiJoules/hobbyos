@@ -57,6 +57,7 @@ At this point, you should be able to boot this feeble os from the usb stick.
 
 
 ## Notes/other stuff
+- Inside `condig.sh`, I added `-Werror` as a C flag to treat all warnings as errors. If you are unable to build, and have absolutely no idea what the problem is, remove `-Werror` from the list of C flags.
 
 
 ## References
