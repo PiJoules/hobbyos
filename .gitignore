@@ -1,0 +1,11 @@
+*.a
+*.out
+*.o
+*.so
+*.exe
+*.iso
+*.bin
+sysroot/
+tools/
+isodir/
+opt/
