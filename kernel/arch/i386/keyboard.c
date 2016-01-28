@@ -2,14 +2,14 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
-
 #include <drivers/keyboard.h>
 
-/*
-PS/2 keyboard code.
-Dependencies:
-inb function and scancode table.
-*/
+
+/**
+ * PS/2 keyboard code.
+ * Dependencies:
+ * inb function and scancode table.
+ */
 static inline uint8_t inb(uint16_t port){
     uint8_t ret;
     asm volatile ( "inb %[port], %[ret]"

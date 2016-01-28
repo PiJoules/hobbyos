@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-char getScanCode();
+char getScancode();
 char getKeyPressed();
 
 #endif

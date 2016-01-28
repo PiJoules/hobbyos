@@ -1,9 +1,11 @@
 #ifndef _STDIO_H
 #define _STDIO_H
+
 #include <stdarg.h>
 #include <stddef.h>
 #define SEEK_SET 0
 typedef struct { int unused; } FILE;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -19,7 +21,12 @@ long ftell(FILE*);
 size_t fwrite(const void*, size_t, size_t, FILE*);
 void setbuf(FILE*, char*);
 int vfprintf(FILE*, const char*, va_list);
+//int putchar(int);
 #ifdef __cplusplus
 }
 #endif
+
+int putchar(int);
+int printf(const char* restrict, ...);
+
 #endif

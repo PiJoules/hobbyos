@@ -1,6 +1,10 @@
 #ifndef _KERNEL_TTY_H
 #define _KERNEL_TTY_H
 
+/**
+ * Teletypewriter functions in kernel space.
+ */
+
 #include <stddef.h>
 
 void terminal_initialize(void);

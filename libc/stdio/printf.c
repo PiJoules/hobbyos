@@ -59,7 +59,7 @@ int printf(const char* restrict format, ...){
 		}
 		else if ( *format == 'c' ){
 			format++;
-			char c = (char) va_arg(parameters, int /* char promotes to int */);
+			char c = (char) va_arg(parameters, int);
 			print(&c, sizeof(c));
 		}
 		else if ( *format == 's' ){
