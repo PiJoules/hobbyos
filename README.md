@@ -23,7 +23,7 @@ Most of these are just programs used to build `configure` files and `Makefile`s.
 # Building
 If God is willing, this should be all you need to run. Otherwise, I wish you best of luck in fixing it.
 
-## Tools setup (Done Once)
+## Tools setup (done once)
 Before anything can be built, we need the cross compiler to build everything in a different format. For now, the format is i686-elf, but if the hosted cross compiler is used, the format will be something like i686-myos to indicate a new host/target format.
 
 **Unless you plan to change the source code for the tools, you only need to build the tools once.**
