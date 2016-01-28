@@ -9,3 +9,4 @@ sysroot/
 tools/
 isodir/
 opt/
+*.kernel
