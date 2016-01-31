@@ -28,11 +28,12 @@ enum vgaColor {
 };
 
 
-void kinitialize(void);
+void kinitialize(uint16_t dataPort, uint16_t indexPort, uint32_t vgaStart);
 void kputchar(char c);
 void kwrite(const char* data, size_t size);
 void kwriteString(const char* data);
 void vgaInit(uint16_t data, uint16_t i, uint32_t base);
+void kclear();
 
 
 #endif

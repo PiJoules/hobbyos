@@ -3,18 +3,19 @@
 #include <stdint.h>
 #include <string.h>
 #include <kernel/tty.h>
+#include <i386/ports.h>
 
 
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
-static uint16_t* const VGA_MEMORY = (uint16_t*) 0xB8000;
+static uint16_t* VGA_MEMORY;
 
-size_t terminalRow;
-size_t terminalColumn;
-uint8_t terminalColor;
-uint16_t* terminalBuffer;
+static size_t terminalRow;
+static size_t terminalColumn;
+static uint8_t terminalColor;
+static uint16_t* terminalBuffer;
+static uint16_t terminalIndexPort, terminalDataPort;
 
-uint16_t terminalIndexPort, terminalDataPort;
 
 /**
  * Upper 4 bits describe the background.
@@ -35,13 +36,30 @@ static inline uint16_t makeVGAEntry(char c, uint8_t color) {
 	return c16 | color16 << 8;
 }
 
-static void kputEntryAt(char c, uint8_t color, size_t x, size_t y){
-	const size_t i = y * VGA_WIDTH + x;
-	terminalBuffer[i] = makeVGAEntry(c, color);
+
+void kmoveCursor(size_t x, size_t y){
+    const size_t i = y * VGA_WIDTH + x;
+    outb(terminalIndexPort, 14);
+    outb(terminalDataPort, i >> 8);
+    outb(terminalIndexPort, 15);
+    outb(terminalIndexPort, i);
 }
 
 
-void kinitialize(){
+/**
+ * Place char c with color at (x,y)
+ */
+static void kputEntryAt(char c, uint8_t color, size_t x, size_t y){
+	const size_t i = y * VGA_WIDTH + x;
+	terminalBuffer[i] = makeVGAEntry(c, color);
+    kmoveCursor(x, y);
+}
+
+
+/**
+ * Clear the terminal.
+ */
+void kclear(){
 	terminalRow = 0;
 	terminalColumn = 0;
 	terminalColor = makeColor(COLOR_LIGHT_GREY, COLOR_BLACK);
@@ -54,6 +72,20 @@ void kinitialize(){
 }
 
 
+/**
+ * This function should only be called once during kernel setup.
+ */
+void kinitialize(uint16_t dataPort, uint16_t indexPort, uint32_t vgaStart){
+    terminalDataPort = dataPort;
+    terminalIndexPort = indexPort;
+    VGA_MEMORY = (uint16_t*)vgaStart;
+    kclear();
+}
+
+
+/**
+ * Print a character with default colors.
+ */
 void kputchar(char c){
 	kputEntryAt(c, terminalColor, terminalColumn, terminalRow);
 	if ( ++terminalColumn >= VGA_WIDTH ) {
@@ -65,12 +97,19 @@ void kputchar(char c){
 }
 
 
-void kwrite(const char* data, size_t size){
-	for ( size_t i = 0; i < size; i++ )
+/**
+ * Print up to n characters of a string with default colors.
+ */
+void kwrite(const char* data, size_t n){
+	for ( size_t i = 0; i < n; i++ )
 		kputchar(data[i]);
 }
 
 
+/**
+ * Print a string with default colors.
+ */
 void kwriteString(const char* data){
 	kwrite(data, strlen(data));
 }
+

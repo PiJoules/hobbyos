@@ -10,8 +10,7 @@
  * Core kernel initialization
  */
 void ksetup(){
-    //vgaInit(0x3D5, 0x3D4, 0xB8000);
-	kinitialize();
+	kinitialize(0x3d5, 0x3d4, 0xb8000);
 }
 
 
