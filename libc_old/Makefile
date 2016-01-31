@@ -13,13 +13,13 @@ INCLUDEDIR?=$(PREFIX)/include
 LIBDIR?=$(EXEC_PREFIX)/lib
  
 CFLAGS:=$(CFLAGS) -Wall -Wextra
-CPPFLAGS:=$(CPPFLAGS) -D__is_hobbyos_libc -Iinclude
+CPPFLAGS:=$(CPPFLAGS) -D__is_myos_libc -Iinclude
 LIBK_CFLAGS:=$(CFLAGS) -ffreestanding -fbuiltin
-LIBK_CPPFLAGS:=$(CPPFLAGS) -D__is_hobby_kernel
+LIBK_CPPFLAGS:=$(CPPFLAGS) -D__is_myos_kernel
  
 ARCHDIR:=arch/$(HOSTARCH)
  
-include $(ARCHDIR)/Makefile
+include $(ARCHDIR)/make.config
  
 CFLAGS:=$(CFLAGS) $(ARCH_CFLAGS)
 CPFLAGS:=$(CPPFLAGS) $(ARCH_CPPFLAGS)

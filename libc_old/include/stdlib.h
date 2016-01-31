@@ -1,5 +1,5 @@
 #ifndef _STDLIB_H
-#define _STDLIB_H
+#define _STDLIB_H 1
 
 #include <sys/cdefs.h>
 
@@ -7,12 +7,8 @@
 extern "C" {
 #endif
 
-// abort() and exit() should never return
-__attribute__((noreturn))
+__attribute__((__noreturn__))
 void abort();
-__attribute__((noreturn))
-void exit(int);
-
 
 #ifdef __cplusplus
 }

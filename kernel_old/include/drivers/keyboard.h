@@ -4,5 +4,6 @@
 #include <stdint.h>
 
 char getScancode();
+char getKeyPressed();
 
 #endif

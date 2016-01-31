@@ -4,24 +4,21 @@
 #include <string.h>
 #include <drivers/keyboard.h>
 
-/**
- * Receives a 8/16/32-bit value from an I/O location.
- * Traditional names are inb, inw and inl respectively. 
- */
-static inline uint8_t inb(uint16_t port){
-    uint8_t ret;
-    asm volatile ( "inb %[port], %[ret]"
-                   : [ret] "=a"(ret)
-                   : [port] "Nd"(port) );
-    return ret;
-}
-
 
 /**
  * PS/2 keyboard code.
  * Dependencies:
  * inb function and scancode table.
  */
+static inline uint8_t inb(uint16_t port){
+    uint8_t ret;
+    asm volatile ( "inb %[port], %[ret]"
+                   : [ret] "=a"(ret)   // using symbolic operand names as an example, mainly because they're not used in order
+                   : [port] "Nd"(port) );
+    return ret;
+}
+
+
 char getScancode() {
 	char c = 0;
 	do {
@@ -33,3 +30,6 @@ char getScancode() {
 	} while(1);
 }
 
+char getKeyPressed(){
+	return (char)((uint8_t)getScancode() + 126);
+}

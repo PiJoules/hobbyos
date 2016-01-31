@@ -1,6 +1,6 @@
 HOST?=$(shell ../default-host.sh)
 HOSTARCH:=$(shell ../target-triplet-to-arch.sh $(HOST))
-
+ 
 CFLAGS?=-O2 -g
 CPPFLAGS?=
 LDFLAGS?=
@@ -13,13 +13,13 @@ BOOTDIR?=$(EXEC_PREFIX)/boot
 INCLUDEDIR?=$(PREFIX)/include
  
 CFLAGS:=$(CFLAGS) -ffreestanding -fbuiltin -Wall -Wextra
-CPPFLAGS:=$(CPPFLAGS) -D__is_hobbyos_kernel -Iinclude
+CPPFLAGS:=$(CPPFLAGS) -D__is_myos_kernel -Iinclude
 LDFLAGS:=$(LDFLAGS)
 LIBS:=$(LIBS) -nostdlib -lk -lgcc
 
 ARCHDIR:=arch/$(HOSTARCH)
  
-include $(ARCHDIR)/Makefile
+include $(ARCHDIR)/make.config
  
 CFLAGS:=$(CFLAGS) $(KERNEL_ARCH_CFLAGS)
 CPFLAGS:=$(CPPFLAGS) $(KERNEL_ARCH_CPPFLAGS)
@@ -30,7 +30,7 @@ LIBS:=$(LIBS) $(KERNEL_ARCH_LIBS)
 # add the .o file here.
 OBJS:=\
 $(KERNEL_ARCH_OBJS) \
-core/kernel.o \
+kernel/kernel.o \
  
 CRTI_OBJ:=$(ARCHDIR)/crti.o
 CRTBEGIN_OBJ:=$(shell $(CC) $(CFLAGS) $(LDFLAGS) -print-file-name=crtbegin.o)
@@ -49,11 +49,11 @@ $(OBJS) \
 $(CRTEND_OBJ) \
 $(CRTN_OBJ) \
  
-all: hobbyos.kernel
+all: myos.kernel
  
 .PHONY: all clean install install-headers install-kernel
  
-hobbyos.kernel: $(OBJ_LINK_LIST) $(ARCHDIR)/linker.ld
+myos.kernel: $(OBJ_LINK_LIST) $(ARCHDIR)/linker.ld
 	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(OBJ_LINK_LIST) $(LDFLAGS) $(LIBS)
  
 %.o: %.c
@@ -63,7 +63,7 @@ hobbyos.kernel: $(OBJ_LINK_LIST) $(ARCHDIR)/linker.ld
 	$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
  
 clean:
-	rm -f *.kernel $(OBJS) $(ALL_OUR_OBJS) *.o */*.o */*/*.o
+	rm -f myos.kernel $(OBJS) $(ALL_OUR_OBJS) *.o */*.o */*/*.o
  
 install: install-headers install-kernel
  
@@ -71,6 +71,6 @@ install-headers:
 	mkdir -p $(DESTDIR)$(INCLUDEDIR)
 	cp -RTv include $(DESTDIR)$(INCLUDEDIR)
  
-install-kernel: hobbyos.kernel
+install-kernel: myos.kernel
 	mkdir -p $(DESTDIR)$(BOOTDIR)
-	cp hobbyos.kernel $(DESTDIR)$(BOOTDIR)
+	cp myos.kernel $(DESTDIR)$(BOOTDIR)
