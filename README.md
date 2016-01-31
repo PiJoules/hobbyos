@@ -68,6 +68,7 @@ At this point, you should be able to boot this feeble os from the usb stick.
 ## TODO
 - Continue to fix terminal (scrolling, newlines, ...)
 - Add scancode table to print out actual characters.
+- Move all the shell scripts to some scripts directory.
 
 
 ## History
