@@ -5,10 +5,10 @@
  * Sends a 8/16/32-bit value on a I/O location.
  * Traditional names are outb, outw and outl respectively.
  */
-void outb(uint16_t port, uint8_t val) {
-    asm volatile("outb %0, %1"
-                 :  // No output
-                 : "a"(val), "Nd"(port));  // input
+void outb(uint16_t port, uint8_t data) {
+    asm volatile("outb %[data], %[port]"
+                 :  // no output
+                 : [data] "a"(data), [port] "Nd"(port));  // input
 }
 
 

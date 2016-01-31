@@ -37,12 +37,15 @@ static inline uint16_t makeVGAEntry(char c, uint8_t color) {
 }
 
 
-void kmoveCursor(size_t x, size_t y){
+/**
+ * Move the hardware cursor.
+ */
+static void kmoveCursor(size_t x, size_t y){
     const size_t i = y * VGA_WIDTH + x;
     outb(terminalIndexPort, 14);
     outb(terminalDataPort, i >> 8);
     outb(terminalIndexPort, 15);
-    outb(terminalIndexPort, i);
+    outb(terminalDataPort, i);
 }
 
 
