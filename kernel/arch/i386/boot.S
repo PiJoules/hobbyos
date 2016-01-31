@@ -26,13 +26,13 @@ _start:
 	movl $stack_top, %esp
 
 	# Initialize the core kernel before running the global constructors.
-	call kernel_early
+	call ksetup
 
 	# Call the global constructors.
 	call _init
 
 	# Transfer control to the main kernel.
-	call kernel_main
+	call kmain
 
 	# Hang if kernel_main unexpectedly returns.
 	cli

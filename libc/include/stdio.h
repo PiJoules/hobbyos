@@ -9,8 +9,8 @@ typedef struct { int unused; } FILE;
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 extern FILE* stderr;
-#define stderr stderr
 int fclose(FILE*);
 int fflush(FILE*);
 FILE* fopen(const char*, const char*);
@@ -21,12 +21,11 @@ long ftell(FILE*);
 size_t fwrite(const void*, size_t, size_t, FILE*);
 void setbuf(FILE*, char*);
 int vfprintf(FILE*, const char*, va_list);
-//int putchar(int);
+int putchar(int);
+int printf(const char* restrict, ...);
+
 #ifdef __cplusplus
 }
 #endif
-
-int putchar(int);
-int printf(const char* restrict, ...);
 
 #endif

@@ -3,8 +3,7 @@
 
 #include <stdint.h>
 
-enum vga_color
-{
+enum vgaColor {
 	COLOR_BLACK = 0,
 	COLOR_BLUE = 1,
 	COLOR_GREEN = 2,
@@ -23,21 +22,22 @@ enum vga_color
 	COLOR_WHITE = 15,
 };
 
-static inline uint8_t make_color(enum vga_color fg, enum vga_color bg)
-{
+static const size_t VGA_WIDTH = 80;
+static const size_t VGA_HEIGHT = 25;
+static uint16_t* const VGA_MEMORY = (uint16_t*) 0xB8000;
+
+static inline uint8_t makeColor(enum vgaColor fg, enum vgaColor bg) {
 	return fg | bg << 4;
 }
 
-static inline uint16_t make_vgaentry(char c, uint8_t color)
-{
+static inline uint16_t makeVGAEntry(char c, uint8_t color) {
 	uint16_t c16 = c;
 	uint16_t color16 = color;
 	return c16 | color16 << 8;
 }
 
-static const size_t VGA_WIDTH = 80;
-static const size_t VGA_HEIGHT = 25;
-
-static uint16_t* const VGA_MEMORY = (uint16_t*) 0xB8000;
+void vgaInit(uint16_t data, uint16_t i, uint32_t base){
+    
+}
 
 #endif
