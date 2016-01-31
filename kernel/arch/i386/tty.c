@@ -10,7 +10,12 @@ size_t terminalColumn;
 uint8_t terminalColor;
 uint16_t* terminalBuffer;
 
-void kputEntryAt(char, uint8_t, size_t, size_t);
+
+static void kputEntryAt(char c, uint8_t color, size_t x, size_t y){
+	const size_t i = y * VGA_WIDTH + x;
+	terminalBuffer[i] = makeVGAEntry(c, color);
+}
+
 
 void kinitialize(){
 	terminalRow = 0;
@@ -24,14 +29,6 @@ void kinitialize(){
 	}
 }
 
-void ksetColor(uint8_t color){
-	terminalColor = color;
-}
-
-void kputEntryAt(char c, uint8_t color, size_t x, size_t y){
-	const size_t i = y * VGA_WIDTH + x;
-	terminalBuffer[i] = makeVGAEntry(c, color);
-}
 
 void kputchar(char c){
 	kputEntryAt(c, terminalColor, terminalColumn, terminalRow);
@@ -43,10 +40,12 @@ void kputchar(char c){
 	}
 }
 
+
 void kwrite(const char* data, size_t size){
 	for ( size_t i = 0; i < size; i++ )
 		kputchar(data[i]);
 }
+
 
 void kwriteString(const char* data){
 	kwrite(data, strlen(data));

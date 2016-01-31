@@ -2,19 +2,8 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+#include <i386/ports.h>
 #include <drivers/keyboard.h>
-
-/**
- * Receives a 8/16/32-bit value from an I/O location.
- * Traditional names are inb, inw and inl respectively. 
- */
-static inline uint8_t inb(uint16_t port){
-    uint8_t ret;
-    asm volatile ( "inb %[port], %[ret]"
-                   : [ret] "=a"(ret)
-                   : [port] "Nd"(port) );
-    return ret;
-}
 
 
 /**

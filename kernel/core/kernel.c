@@ -21,7 +21,6 @@ void ksetup(){
  */
 void kmain(){
 	printf("Hello, kernel World!\n");
-    //kwriteString("Hello world!\n");
 
     while (1){
 		printf("%c\n", getScancode());
