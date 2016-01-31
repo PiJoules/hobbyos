@@ -15,7 +15,7 @@ LIBDIR?=$(EXEC_PREFIX)/lib
 CFLAGS:=$(CFLAGS) -Wall -Wextra
 CPPFLAGS:=$(CPPFLAGS) -D__is_hobbyos_libc -Iinclude
 LIBK_CFLAGS:=$(CFLAGS) -ffreestanding -fbuiltin
-LIBK_CPPFLAGS:=$(CPPFLAGS) -D__is_hobby_kernel
+LIBK_CPPFLAGS:=$(CPPFLAGS) -D__is_hobbyos_kernel
  
 ARCHDIR:=arch/$(HOSTARCH)
  

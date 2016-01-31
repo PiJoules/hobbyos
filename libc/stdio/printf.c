@@ -3,13 +3,17 @@
 #include <stdio.h>
 #include <string.h>
 
+#if defined(__is_hobbyos_kernel)
+#include <kernel/tty.h>
+#endif
 
 /**
  * Print the first n characters of a string.
  */
 static void print(const char* s, size_t n){
+    const unsigned char *s_ = (const unsigned char*)s;
     for (size_t i = 0; i < n; i++){
-        putchar((int) s[i]);
+        putchar((int) s_[i]);
     }
 }
 
