@@ -2,14 +2,38 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+#include <kernel/tty.h>
 
-#include <kernel/vga.h>
+
+static const size_t VGA_WIDTH = 80;
+static const size_t VGA_HEIGHT = 25;
+static uint16_t* const VGA_MEMORY = (uint16_t*) 0xB8000;
 
 size_t terminalRow;
 size_t terminalColumn;
 uint8_t terminalColor;
 uint16_t* terminalBuffer;
 
+uint16_t terminalIndexPort, terminalDataPort;
+
+/**
+ * Upper 4 bits describe the background.
+ * Lower 4 bits describe the foreground (text color).
+ */
+static inline uint8_t makeColor(enum vgaColor fg, enum vgaColor bg) {
+	return fg | bg << 4;
+}
+
+
+/**
+ * Upper 16 bits describe the color.
+ * Lower 16 bits are the character.
+ */
+static inline uint16_t makeVGAEntry(char c, uint8_t color) {
+	uint16_t c16 = c;
+	uint16_t color16 = color;
+	return c16 | color16 << 8;
+}
 
 static void kputEntryAt(char c, uint8_t color, size_t x, size_t y){
 	const size_t i = y * VGA_WIDTH + x;

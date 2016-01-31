@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 #include <kernel/tty.h>
-#include <kernel/vga.h>
 #include <drivers/keyboard.h>
 
 /**
