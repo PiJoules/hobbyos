@@ -8,4 +8,4 @@ KERNEL_ARCH_OBJS:=\
 $(ARCHDIR)/boot.o \
 $(ARCHDIR)/tty.o \
 $(ARCHDIR)/keyboard.o \
-$(ARCHDIR)/ports.c
+$(ARCHDIR)/ports.o
