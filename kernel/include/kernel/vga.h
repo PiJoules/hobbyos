@@ -36,8 +36,8 @@ static inline uint16_t makeVGAEntry(char c, uint8_t color) {
 	return c16 | color16 << 8;
 }
 
-void vgaInit(uint16_t data, uint16_t i, uint32_t base){
+/*void vgaInit(uint16_t data, uint16_t i, uint32_t base){
     
-}
+}*/
 
 #endif
