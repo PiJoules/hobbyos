@@ -172,11 +172,11 @@ if [ "$SKIPGCCCROSS" == "0" ]; then
 fi
 
 ## END OF i686-elf
-## START OF i686-myos
+## START OF i686-hobbyos
 # Steps:
-# - It is assume that you have configured binutils, gcc, and newlib to allow for i686-myos (this should be done alreayd and not automated)
+# - It is assume that you have configured binutils, gcc, and newlib to allow for i686-hobbyos (this should be done alreayd and not automated)
 # 1. Build newlib using the bad hack and i686-target
-# 2. Build binutils using i686-myos target and --with-sysroot=$SYSROOT
+# 2. Build binutils using i686-hobbyos target and --with-sysroot=$SYSROOT
 # 3. Same for gcc (build only gcc and libgcc, DO NOT BUILD libstdc++-v3)
 # 4. Rebuild newlib but without the hack
 # 5. Build libstdc++-v3
@@ -195,25 +195,25 @@ if [ "$SKIPNEWLIB1" == "0" ]; then
 	# make symlinks (a bad hack) to make newlib work
 	cd $DESTINATION/gcc-cross-$GCCVERSION/bin/ # this is where the bootstrapped generic cross compiler toolchain (i686-elf-xxx) is installed in,
 	                # change this based on your development environment.
-	ln i686-elf-ar i686-myos-ar
-	ln i686-elf-as i686-myos-as
-	ln i686-elf-gcc i686-myos-gcc
-	ln i686-elf-gcc i686-myos-cc
-	ln i686-elf-ranlib i686-myos-ranlib
+	ln i686-elf-ar i686-hobbyos-ar
+	ln i686-elf-as i686-hobbyos-as
+	ln i686-elf-gcc i686-hobbyos-gcc
+	ln i686-elf-gcc i686-hobbyos-cc
+	ln i686-elf-ranlib i686-hobbyos-ranlib
 	 
 	# return
 	cd $CURRDIR
 
 	mkdir build-newlib-cross
 	cd build-newlib-cross
-	../newlib-$NEWLIBVERSION/configure --prefix=/usr --target=i686-myos
+	../newlib-$NEWLIBVERSION/configure --prefix=/usr --target=i686-hobbyos
 	error_exit "newlib configure"
 	make all
 	error_exit "newlib make all"
 	make DESTDIR=$SYSROOT install
 	error_exit "newlib make DESTDIR=$SYSROOT install"
-	cp -ar $SYSROOT/usr/i686-myos/* $SYSROOT/usr
-	error_exit "unable to copy from $SYSROOT/usr/i686-myos/* to $SYSROOT/usr"
+	cp -ar $SYSROOT/usr/i686-hobbyos/* $SYSROOT/usr
+	error_exit "unable to copy from $SYSROOT/usr/i686-hobbyos/* to $SYSROOT/usr"
 fi
 echo "done building newlib."
 
@@ -223,7 +223,7 @@ if [ "$SKIPBINUTILSCROSS2" == "0" ]; then
 	cd $SOURCELOCATION
 	mkdir build-binutils-cross2
 	cd build-binutils-cross2
-	../binutils-$BINUTILSVERSION/configure --target=i686-myos --prefix="$DESTINATION/gcc-cross-$GCCVERSION" --with-sysroot=$SYSROOT --disable-werror
+	../binutils-$BINUTILSVERSION/configure --target=i686-hobbyos --prefix="$DESTINATION/gcc-cross-$GCCVERSION" --with-sysroot=$SYSROOT --disable-werror
 	error_exit "cross2 binutils config"
 	make
 	error_exit "cross2 binutils make"
@@ -238,7 +238,7 @@ if [ "$SKIPGCCCROSS2" == "0" ]; then
 	cd $SOURCELOCATION
 	mkdir build-gcc-cross2
 	cd build-gcc-cross2
-	../gcc-$GCCVERSION/configure --target=i686-myos --prefix="$DESTINATION/gcc-cross-$GCCVERSION" --with-sysroot=$SYSROOT --enable-languages=c,c++
+	../gcc-$GCCVERSION/configure --target=i686-hobbyos --prefix="$DESTINATION/gcc-cross-$GCCVERSION" --with-sysroot=$SYSROOT --enable-languages=c,c++
 	error_exit "cross2 gcc config"
 	make all-gcc all-target-libgcc
 	error_exit "cross2 gcc make all-gcc all-target-libgcc"
@@ -256,14 +256,14 @@ if [ "$SKIPNEWLIB2" == "0" ]; then
 	cd $SOURCELOCATION
 	mkdir build-newlib-cross
 	cd build-newlib-cross
-	../newlib-$NEWLIBVERSION/configure --prefix=/usr --target=i686-myos
+	../newlib-$NEWLIBVERSION/configure --prefix=/usr --target=i686-hobbyos
 	error_exit "newlib configure"
 	make all
 	error_exit "newlib make all"
 	make DESTDIR=$SYSROOT install
 	error_exit "newlib make DESTDIR=$SYSROOT install"
-	cp -ar $SYSROOT/usr/i686-myos/* $SYSROOT/usr/
-	error_exit "unable to copy from $SYSROOT/usr/i686-myos/* to $SYSROOT/usr"
+	cp -ar $SYSROOT/usr/i686-hobbyos/* $SYSROOT/usr/
+	error_exit "unable to copy from $SYSROOT/usr/i686-hobbyos/* to $SYSROOT/usr"
 fi
 echo "done building newlib."
 
@@ -291,18 +291,18 @@ if [ "$SKIPPYTHON" == "0" ]; then
 	mv Parser/pgen Parser/hostpgen
 	make distclean
 	error_exit "python make distclean"
-	export CC=i686-myos-gcc
-	export CXX=i686-myos-g++
-	export AR=i686-myos-ar
-	export RANLIB=i686-myos-ranlib
+	export CC=i686-hobbyos-gcc
+	export CXX=i686-hobbyos-g++
+	export AR=i686-hobbyos-ar
+	export RANLIB=i686-hobbyos-ranlib
 	echo "configuring again..."
 	sleep 1
-	./configure --build=x86_64-linux-gnu --host=i686-myos --prefix=/usr/python-cross
-	error_exit "python ./configure --host=i686-myos --prefix=/usr/python-cross"
+	./configure --build=x86_64-linux-gnu --host=i686-hobbyos --prefix=/usr/python-cross
+	error_exit "python ./configure --host=i686-hobbyos --prefix=/usr/python-cross"
 	make python Parser/pgen  # I changed A LOT of stuff to get this to work
 	error_exit "python again make python Parser/pgen"
 
-	make HOSTPYTHON=./hostpython HOSTPGEN=./Parser/hostpgen BLDSHARED="i686-myos-gcc -shared" CROSS_COMPILE=yes
+	make HOSTPYTHON=./hostpython HOSTPGEN=./Parser/hostpgen BLDSHARED="i686-hobbyos-gcc -shared" CROSS_COMPILE=yes
 	error_exit "python make with all the hosts"
 
 fi
@@ -315,7 +315,7 @@ if [ "$SKIPHOSTEDBINUTILS" == "0" ]; then
 	mkdir build-hosted-binutils
 	cd build-hosted-binutils
 
-	../binutils-$BINUTILSVERSION/configure --build=x86_64-linux-gnu --host=i686-myos --prefix=/usr --disable-nls --disable-werror
+	../binutils-$BINUTILSVERSION/configure --build=x86_64-linux-gnu --host=i686-hobbyos --prefix=/usr --disable-nls --disable-werror
 	error_exit "hosted binutils configure"
 	make
 	error_exit "hosted binutils make"
@@ -330,7 +330,7 @@ if [ "$SKIPHOSTEDGCC" == "0" ]; then
 	cd $SOURCELOCATION
 	mkdir build-hosted-gcc
 	cd build-hosted-gcc
-	../gcc-$GCCVERSION/configure --build=x86_64-linux-gnu --target=i686-myos --prefix=/usr --enable-languages=c,c++
+	../gcc-$GCCVERSION/configure --build=x86_64-linux-gnu --target=i686-hobbyos --prefix=/usr --enable-languages=c,c++
 	make all-gcc
 	error_exit "hosted gcc make all-gcc"
 	make all-target-libgcc
