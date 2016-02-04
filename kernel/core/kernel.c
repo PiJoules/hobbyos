@@ -5,6 +5,7 @@
 
 #include <kernel/tty.h>
 #include <i386/gdt.h>
+#include <i386/idt.h>
 #include <drivers/keyboard.h>
 
 /**
@@ -15,6 +16,10 @@ void ksetup(){
     printf("Initialized the tty.\n");
 
     gdtInit();
+    printf("Initialized the gdt.\n");
+
+    idtInit();
+    printf("Initialized the idt.\n");
 }
 
 
@@ -23,6 +28,8 @@ void ksetup(){
  */
 void kmain(){
 	printf("Hello, kernel World!\n");
+    asm volatile ("int $0x3");
+    asm volatile ("int $0x4"); 
 
     //while (1){
 	//	printf("%c\n", getScancode());

@@ -10,4 +10,6 @@ $(ARCHDIR)/tty.o \
 $(ARCHDIR)/keyboard.o \
 $(ARCHDIR)/ports.o \
 $(ARCHDIR)/gdt.o \
-$(ARCHDIR)/gdt_flush.o
+$(ARCHDIR)/gdt_flush.o \
+$(ARCHDIR)/idt.o \
+$(ARCHDIR)/idt_extras.o

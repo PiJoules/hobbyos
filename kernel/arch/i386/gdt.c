@@ -37,12 +37,12 @@ void gdtInit(){
 }
 
 static void gdtSetGate(int _n, unsigned long _base, unsigned long _limit, unsigned char _access, unsigned char _gran){
-    gdt[_n].base_low    = (_base & 0xFFFF);
-    gdt[_n].base_mid    = (_base >> 16) & 0xFF;
-    gdt[_n].base_high   = (_base >> 24) & 0xFF;
-    gdt[_n].limit_low   = (_limit & 0xFFFF);
+    gdt[_n].base_low = (_base & 0xFFFF);
+    gdt[_n].base_mid = (_base >> 16) & 0xFF;
+    gdt[_n].base_high = (_base >> 24) & 0xFF;
+    gdt[_n].limit_low = (_limit & 0xFFFF);
     gdt[_n].granularity = ((_limit >> 16) & 0x0F);
     gdt[_n].granularity |= _gran & 0xF0;
-    gdt[_n].access      = _access;
+    gdt[_n].access = _access;
 }
 
