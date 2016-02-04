@@ -61,7 +61,10 @@ hobbyos.kernel: $(OBJ_LINK_LIST) $(ARCHDIR)/linker.ld
  
 %.o: %.S
 	$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
- 
+
+%.o: %.s
+	nasm -f elf -o $@ $<
+
 clean:
 	rm -f *.kernel $(OBJS) $(ALL_OUR_OBJS) *.o */*.o */*/*.o
  

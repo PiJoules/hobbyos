@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include <kernel/tty.h>
+#include <i386/gdt.h>
 #include <drivers/keyboard.h>
 
 /**
@@ -11,6 +12,9 @@
  */
 void ksetup(){
 	kinitialize(0x3d5, 0x3d4, 0xb8000);
+    printf("Initialized the tty.\n");
+
+    gdtInit();
 }
 
 
@@ -20,7 +24,7 @@ void ksetup(){
 void kmain(){
 	printf("Hello, kernel World!\n");
 
-    while (1){
-		printf("%c\n", getScancode());
-    }
+    //while (1){
+	//	printf("%c\n", getScancode());
+    //}
 }

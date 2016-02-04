@@ -90,13 +90,22 @@ void kinitialize(uint16_t dataPort, uint16_t indexPort, uint32_t vgaStart){
  * Print a character with default colors.
  */
 void kputchar(char c){
-	kputEntryAt(c, terminalColor, terminalColumn, terminalRow);
-	if ( ++terminalColumn >= VGA_WIDTH ) {
-		terminalColumn = 0;
-        if ( ++terminalRow >= VGA_HEIGHT ) {
+    if (c == '\n'){
+        terminalColumn = 0;
+        if (++terminalRow >= VGA_HEIGHT){
             terminalRow = 0;
         }
-	}
+        kmoveCursor(terminalColumn, terminalRow);
+    }
+	else {
+        kputEntryAt(c, terminalColor, terminalColumn, terminalRow);
+        if ( ++terminalColumn >= VGA_WIDTH ) {
+            terminalColumn = 0;
+            if ( ++terminalRow >= VGA_HEIGHT ) {
+                terminalRow = 0;
+            }
+        }
+    }
 }
 
 
