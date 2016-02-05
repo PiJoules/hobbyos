@@ -17,7 +17,8 @@ export BOOTDIR=/boot
 export LIBDIR=$EXEC_PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
  
-export CFLAGS='-O2 -g -Werror'  # Remove -Werror when you don't know what to do next
+export CFLAGS='-O2 -g'
+#export CFLAGS="$CFGLAGS -Werror" # Remove -Werror when you don't know what to do next
 export CPPFLAGS=''
  
 # Configure the cross-compiler to use the desired system root.
