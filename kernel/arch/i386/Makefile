@@ -12,4 +12,7 @@ $(ARCHDIR)/ports.o \
 $(ARCHDIR)/gdt.o \
 $(ARCHDIR)/gdt_flush.o \
 $(ARCHDIR)/idt.o \
-$(ARCHDIR)/idt_extras.o
+$(ARCHDIR)/idt_extras.o \
+$(ARCHDIR)/pic.o \
+$(ARCHDIR)/interrupt.o \
+$(ARCHDIR)/pit.o

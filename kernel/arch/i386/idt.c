@@ -1,12 +1,12 @@
 #include <string.h>
 #include <stdio.h>
 #include <kernel/callback.h>
+#include <i386/interrupt.h>
 #include <i386/ports.h>
 #include <i386/idt.h>
 
 extern void idt_flush(unsigned int);
-
-void_callback_arg_t interruptHandlers[256];
+extern void_callback_arg_t interruptHandlers[];
 
 struct idt_entry_struct{
     unsigned short base_low;   // The Low 16 bits
@@ -67,16 +67,6 @@ void irqHandler(struct regs *_r){
 }
 
 
-/***********************************************************************
-* Void_Callback_Arg_t is a function callback with the following format
-* void fucntion(unsigned int a, ...);
-* x86 calls the functions with the seven General Purpose Registers.
-* Arguments: _n = number of interrupt to register
-*            _f = function of type void_callback_arg_t
-***********************************************************************/
-void interruptHandlerRegister(unsigned char _n, void_callback_arg_t _f){
-    interruptHandlers[_n] = _f;     // Set function into the vector
-}
 
 void unhandledInterrupt(unsigned int _intNum, ...){
     //scrWrite("Recieved An Unhandled Interrupt: ");
